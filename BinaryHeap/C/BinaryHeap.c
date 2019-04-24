@@ -21,32 +21,34 @@ struct BinaryHeap
 };
 
 //Function prototypes
-void insert(struct BinaryHeap heap, struct Node node);
-void moveUp(struct BinaryHeap heap, struct Node node);
+struct BinaryHeap insert(struct BinaryHeap heap, struct Node node);
+struct BinaryHeap moveUp(struct BinaryHeap heap, struct Node node);
 int getParentIndex(struct Node node);
 void printHeap(struct BinaryHeap heap);
-void swap(struct BinaryHeap heap, struct Node n1, struct Node n2);
+struct BinaryHeap swap(struct BinaryHeap heap, struct Node n1, struct Node n2);
 
-void insert(struct BinaryHeap heap, struct Node node)
+struct BinaryHeap insert(struct BinaryHeap heap, struct Node node)
 {
+	heap.size++;
 	node.position = heap.size;
 	heap.nodes[heap.size] = node;
-	heap.size++;
 	moveUp(heap, node);
+
+	return heap;
 }
 
-void moveUp(struct BinaryHeap heap, struct Node node)
+struct BinaryHeap moveUp(struct BinaryHeap heap, struct Node node)
 {
 	int parentIndex = getParentIndex(node);
 	if (node.position == 1)
 	{
-		//nothing to do
-		return;
+		return heap;
 	}
 	if (heap.nodes[parentIndex].data > node.data)
 	{
 		swap(heap, heap.nodes[parentIndex], node);
 	}
+	return heap;
 }
 
 int getParentIndex(struct Node node)
@@ -60,7 +62,7 @@ int getParentIndex(struct Node node)
 	return node.position / 2;
 }
 
-void swap(struct BinaryHeap heap, struct Node n1, struct Node n2)
+struct BinaryHeap swap(struct BinaryHeap heap, struct Node n1, struct Node n2)
 {
 	int swap;
 	swap = n1.position;
@@ -68,6 +70,7 @@ void swap(struct BinaryHeap heap, struct Node n1, struct Node n2)
 	n2.position = swap;
 	heap.nodes[n1.position] = n1;
 	heap.nodes[n2.position] = n2;
+	return heap;
 }
 
 
@@ -75,22 +78,26 @@ void printHeap(struct BinaryHeap heap)
 {
 	printf("\nheap: \n{");
 	int i;
-	for (i = 0; i < heap.size; i++)
+	for (i = 1; i <= heap.size; i++)
 	{
-		printf("%d ",heap.nodes[i]);
+		if (i == heap.size)
+		{
+			printf("%d",heap.nodes[i].data);
+		}
+		else
+		{
+			printf("%d ",heap.nodes[i].data);
+		}
 	}
 	printf("}\n");
 }
 
 int main()
 {
-	//Create the heap
-	
 	struct BinaryHeap heap;
 	heap.size = 0;
 	heap.nodes= (struct Node *) malloc(500);
-	printf("\nheap.nodesmemory address: %p\n\n",heap.nodes);
-
+	printf("\nheap.nodes memory address: %p\n\n",heap.nodes);
 
 	printf("\nWhat would you like to insert in the empty heap?\n\nValue to insert: ");
 
@@ -100,9 +107,36 @@ int main()
 
 	struct Node nodeToInsert;
 
-	insert(heap, nodeToInsert);
+	nodeToInsert.data = userInput;
+
+	heap = 	insert(heap, nodeToInsert);
+
+	printf("%d",heap.size);
 
 	printHeap(heap);
+
+	int userExit = 0;
+
+	while (!userExit)
+	{
+		printf("\nPlease input a command.\n");
+		printf("1. Insert\n2.Find Min\n3.Extract Min\n4. Exit\nCommand: ");
+		scanf(" %d", &userInput);
+		switch(userInput)
+		{
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				userExit = 1;
+				free(heap.nodes);
+			default:
+				break;
+		}
+	}
 
 	return 0;
 }
