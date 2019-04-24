@@ -22,13 +22,54 @@ struct BinaryHeap
 
 //Function prototypes
 void insert(struct BinaryHeap heap, struct Node node);
+void moveUp(struct BinaryHeap heap, struct Node node);
+int getParentIndex(struct Node node);
 void printHeap(struct BinaryHeap heap);
+void swap(struct BinaryHeap heap, struct Node n1, struct Node n2);
 
 void insert(struct BinaryHeap heap, struct Node node)
 {
-	int size = heap.size;
-	//todo
+	node.position = heap.size;
+	heap.nodes[heap.size] = node;
+	heap.size++;
+	moveUp(heap, node);
 }
+
+void moveUp(struct BinaryHeap heap, struct Node node)
+{
+	int parentIndex = getParentIndex(node);
+	if (node.position == 1)
+	{
+		//nothing to do
+		return;
+	}
+	if (heap.nodes[parentIndex].data > node.data)
+	{
+		swap(heap, heap.nodes[parentIndex], node);
+	}
+}
+
+int getParentIndex(struct Node node)
+{
+	if (node.position == 1)
+	{
+		//node has no parent
+		return 1;
+	}
+
+	return node.position / 2;
+}
+
+void swap(struct BinaryHeap heap, struct Node n1, struct Node n2)
+{
+	int swap;
+	swap = n1.position;
+	n1.position = n2.position;
+	n2.position = swap;
+	heap.nodes[n1.position] = n1;
+	heap.nodes[n2.position] = n2;
+}
+
 
 void printHeap(struct BinaryHeap heap)
 {
