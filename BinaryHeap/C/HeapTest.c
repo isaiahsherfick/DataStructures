@@ -213,67 +213,28 @@ int main()
 {
 	struct BinaryHeap heap;
 	heap.size = 0;
-	heap.nodes= (struct Node *) malloc(500);
+	heap.nodes = (struct Node * ) malloc(500);
 	int i;
-	for (i = 0; i < 500; i++)
-	{
-		printf("\n");
-	}
-	printf("\nWhat would you like to insert in the empty heap?\n\nValue to insert: ");
-
-	int userInput;
-
-	scanf(" %d",&userInput);
-
 	struct Node nodeToInsert;
-
-	nodeToInsert.data = userInput;
-
-	heap = 	insert(heap, nodeToInsert);
-
-	int userExit = 0;
-	int printMin = 0;
-	int min;
-
-	while (!userExit)
+	for (i = 0; i < 100; i+=5)
 	{
-		printHeap(heap);
-		if (printMin && heap.size != 0)
+		nodeToInsert.data = i;
+		if (i % 2 == 0)
 		{
-			printf("\nMin: %d\n",min);
-			printMin = 0;
+			nodeToInsert.data *= -1;
 		}
-		printf("\nPlease input a command.\n");
-		printf("1. Insert\n2. Find Min\n3. Extract Min\n4. Exit\nCommand: ");
-		scanf(" %d", &userInput);
-		switch(userInput)
-		{
-			case 1:
-				printf("\nWhat would you like to insert into the heap?\n\nValue to insert: ");
-				scanf(" %d",&userInput);
-				nodeToInsert.data = userInput;
-				heap = insert(heap,nodeToInsert);
-				break;
-			case 2:
-				min = heap.nodes[1].data;
-				printMin = 1;
-				break;
-			case 3:
-				min = heap.nodes[1].data;
-				printMin = 1;
-				heap = extractMin(heap);
-				break;
-			case 4:
-				userExit = 1;
-				free(heap.nodes);
-			default:
-				break;
-		}
+		heap = insert(heap, nodeToInsert);
 	}
 
-	printf("\nExiting...\n");
+	printHeap(heap);
 
+	for (int i  = 0; i < 5; i++)
+	{
+		heap = extractMin(heap);
+	}
+
+	printHeap(heap);
+
+	
 	return 0;
 }
-
-
