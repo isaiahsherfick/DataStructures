@@ -54,8 +54,7 @@ struct BinaryHeap insert(struct BinaryHeap heap, struct Node node)
 	heap.size++;
 	node.position = heap.size;
 	heap.nodes[heap.size] = node;
-	heap = moveUp(heap, node);
-	return heap;
+	return moveUp(heap, node);
 }
 
 //Moves a node up a heap recursively and returns the heap
@@ -111,8 +110,7 @@ struct BinaryHeap extractMin(struct BinaryHeap heap)
 	}
 	heap = swap(heap, heap.nodes[1], heap.nodes[heap.size]);
 	heap.size--;
-	heap = moveDown(heap,heap.nodes[1]);
-	return heap;
+	return moveDown(heap,heap.nodes[1]);
 }
 
 //returns the index of the smallest child of a node
