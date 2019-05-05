@@ -117,6 +117,7 @@ struct Tree rotateLeft(struct Tree t)
 	return easyLeft(t);
 }
 
+//todo 
 struct Tree easyLeft(struct Tree t)
 {
 	struct Tree currentLeft = *t.left;
@@ -125,24 +126,36 @@ struct Tree easyLeft(struct Tree t)
 	struct Tree newLeftTree;
 	struct Node newLeftNode;
 	int newLeftData;
-	newLeft.data = newLeftData;
-	newLeftTree.data = newLeftNode;
+	newLeftNode.data = newLeftData;
+	newLeftTree.data = &newLeftNode;
+	newLeftData = (*t.data).data;
 
 	struct Tree newRightTree;
 	struct Node newRightNode;
 	int newRightData;
-	newRight.data = newRightData;
-	newRightTree.data = newRightNode;
+	newRightNode.data = newRightData;
+	newRightTree.data = &newRightNode;
+	newRightData = (*(*currentRight.right).data).data;
 
 	struct Tree newTree;
 	struct Node newTreeNode;
 	int newTreeNodeData;
-	newTreeNode = newTreeNodeData;
+	newTreeNode.data = newTreeNodeData;
 
 	newTreeNodeData = (*currentRight.data).data;
 	newTreeNode.data = newTreeNodeData;
 	newTree.data = &newTreeNode;
+	newTree.left = newLeft;
+	newTree.right = newRight;
 
+	return newTree;
+
+}
+
+//todo
+struct Tree easyRight(struct Tree t)
+{
+	return t;
 }
 
 int height(struct Tree t)
