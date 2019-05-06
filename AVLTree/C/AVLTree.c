@@ -155,7 +155,8 @@ struct Tree easyLeft(struct Tree t)
 //todo
 struct Tree easyRight(struct Tree t)
 {
-	return t;
+	struct Tree currentLeft = *t.left;
+	struct Tree currentRight = *t.right;
 }
 
 int height(struct Tree t)
